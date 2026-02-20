@@ -1,0 +1,7 @@
+[project]
+name = "hospitalsystem"
+version = "0.1.0"
+description = "Comprehensive hospital management system (RIS/PACS) developed with Clean Architecture, FastAPI, and React. Focused on scalability and separation of responsibilities."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
