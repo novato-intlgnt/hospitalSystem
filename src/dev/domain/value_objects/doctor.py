@@ -1,57 +1,60 @@
-from dataclasses import dataclass, field
-from typing import Any, Self
+"""Value objects related to the Doctor entity"""
+
 import re
+from dataclasses import dataclass
 
-from src.dev.domain.value_objects.base import ValueObject
+from src.dev.domain.value_objects.base import BaseValueObject
+from src.dev.domain.value_objects.person import PersonName
 
-@dataclass(frozen=True)
-class DoctorName(ValueObject):
-    firstName: str
-    lastName: str
-
-    def __post_init__(self) -> None:
-        if not self.firstName or not self.lastName:
-            raise ValueError("First name and last name cannot be empty")
-
-        if not self.firstName.replace(" ", "").isalpha():
-            raise ValueError("First name must contain only letters")
-
-        if not self.lastName.replace(" ", "").isalpha():
-            raise ValueError("Last name must contain only letters")
-
-        if len(self.lastName.split()) < 2:
-            raise ValueError("Last name must contain at least two words")
-
-    @property
-    def fullName(self) -> str:
-        return f"{self.firstName} {self.lastName}"
 
 @dataclass(frozen=True)
-class Specialty(ValueObject):
+class DoctorData(BaseValueObject):
+    """Value object representing the doctor's data"""
+
+    name: PersonName
+    specialty: Specialty
+    email: Email
+    cmp_number: CMPNumber
+    rne_number: RNENumber
+
+
+@dataclass(frozen=True)
+class Specialty(BaseValueObject):
+    """Value object representing a medical Specialty"""
+
     name: str
 
     def __post_init__(self) -> None:
         if not self.name:
             raise ValueError("Specialty name cannot be empty")
 
+
 @dataclass(frozen=True)
-class Email(ValueObject):
-    address: str 
+class Email(BaseValueObject):
+    """Value object representing an email address"""
+
+    address: str
 
     def __post_init__(self) -> None:
         if not re.match(r"^[\w\.-]+@[\w\.-]+\.\w+$", self.address):
             raise ValueError(f"Invalid email format: {self.address}")
 
+
 @dataclass(frozen=True)
-class CMPNumber(ValueObject):
+class CMPNumber(BaseValueObject):
+    """Value object representing a CMP (Colegio Médico del Perú) number"""
+
     number: str
 
     def __post_init__(self) -> None:
         if not re.match(r"^\d{5-6}$", self.number):
             raise ValueError(f"Invalid CMP number format: {self.number}")
 
+
 @dataclass(frozen=True)
-class RNENumber(ValueObject):
+class RNENumber(BaseValueObject):
+    """Value object representing an RNE (Registro Nacional de Especialistas) number"""
+
     number: str
 
     def __post_init__(self) -> None:

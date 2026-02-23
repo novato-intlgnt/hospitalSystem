@@ -1,10 +1,15 @@
+"""Base class for value objects"""
+
 from dataclasses import dataclass, fields
 from typing import Any, Self
 
+
 @dataclass(frozen=True, slots=True, repr=False)
-class ValueObject:
+class BaseValueObject:
+    """Base class for value objects in the domain model"""
+
     def __new__(cls, *args: Any, **kwargs: Any) -> Self:
-        if cls is ValueObject:
+        if cls is BaseValueObject:
             raise TypeError("ValueObject cannot be instantiated directly")
         if not fields(cls):
             raise TypeError(f"{cls.__name__} must have at least one field")

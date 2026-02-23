@@ -1,11 +1,15 @@
+"""Base class for entities"""
+
 from collections.abc import Hashable
 from typing import Any, Self, cast
 
-class Entity[T: Hashable]:
+
+class BaseEntity[T: Hashable]:
     def __new__(cls, *args: Any, **kwargs: Any) -> Self:
-        if cls is Entity:
+        if cls is BaseEntity:
             raise TypeError("Entity cannot be instantiated directly")
         return object.__new__(cls)
+
     def __init__(self, *, id_: T) -> None:
         self.id_ = id_
 
