@@ -7,6 +7,7 @@ from src.dev.domain.entities.base import BaseEntity
 from src.dev.domain.entities.image import Image
 from src.dev.domain.enum.exam_status import ExamStatus
 from src.dev.domain.enum.modality import Modality
+from src.dev.domain.value_objects.exam import ExamID
 from src.dev.domain.value_objects.patient import PatientHC
 from src.dev.domain.value_objects.user import EntityID
 
@@ -18,6 +19,7 @@ class Exam(BaseEntity[EntityID]):
         self,
         *,
         id_: EntityID,
+        exam_id: ExamID,
         patient_HC: PatientHC,
         modality: Modality,
         study_type: str,
@@ -25,6 +27,7 @@ class Exam(BaseEntity[EntityID]):
     ) -> None:
         super().__init__(id_=id_)
         self._patient_hc = patient_HC
+        self._exam_id = exam_id
         self._modality = modality
         self._study_type = study_type
         self._date = date.today()

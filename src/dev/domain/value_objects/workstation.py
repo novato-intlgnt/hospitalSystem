@@ -1,9 +1,17 @@
 """Value objects related to the workstation entity in the hospital domain model."""
 
-import re
+import ipaddress
 from dataclasses import dataclass
 
+from src.dev.domain.enum.workstationType import WorkstationType
 from src.dev.domain.value_objects.base import BaseValueObject
+
+
+@dataclass(frozen=True)
+class HardwareID(BaseValueObject):
+    """Identificador único de hardware (UUID o Serial)"""
+
+    value: str
 
 
 @dataclass(frozen=True)
@@ -14,10 +22,13 @@ class NetworkAddress(BaseValueObject):
     mac_address: str | None = None
 
     def __post_init__(self):
-        # Validación simple de IP (v4)
-        ip_pattern = r"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$"
-        if not re.match(ip_pattern, self.ip_address):
-            raise ValueError(f"Dirección IP inválida: {self.ip_address}")
+        if not self.ip_address or not self.mac_address:
+            raise ValueError("The network address must have both IP and MAC addresses.")
+
+        try:
+            ipaddress.ip_address(self.ip_address)
+        except ValueError as exc:
+            raise ValueError(f"Invalid IP address: {self.ip_address}") from exc
 
 
 @dataclass(frozen=True)
@@ -39,3 +50,14 @@ class PhysicalLocation(BaseValueObject):
     building: str  # Ej: "Pabellón A"
     floor: int  # Ej: 2
     room_number: str  # Ej: "Sala de Rayos X 102"
+
+
+@dataclass(frozen=True)
+class WorkstationData(BaseValueObject):
+    """Value object representing the data required to create a workstation"""
+
+    hardware_id: HardwareID
+    network: NetworkAddress
+    specs: WorkstationSpecs
+    location: PhysicalLocation
+    workstation_type: WorkstationType

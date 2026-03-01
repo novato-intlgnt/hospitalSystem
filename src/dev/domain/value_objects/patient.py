@@ -15,6 +15,7 @@ class PatientData(BaseValueObject):
     """Value object representing patient data"""
 
     dni: PatientDNI
+    patient_id: str
     hc: PatientHC
     name: PersonName
 

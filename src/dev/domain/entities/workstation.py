@@ -3,11 +3,7 @@
 from src.dev.domain.entities.base import BaseEntity
 from src.dev.domain.enum.workstationType import WorkstationType
 from src.dev.domain.value_objects.user import EntityID
-from src.dev.domain.value_objects.workstation import (
-    NetworkAddress,
-    PhysicalLocation,
-    WorkstationSpecs,
-)
+from src.dev.domain.value_objects.workstation import WorkstationData
 
 
 class Workstation(BaseEntity[EntityID]):
@@ -17,22 +13,29 @@ class Workstation(BaseEntity[EntityID]):
         self,
         *,
         id_: EntityID,
-        name: str,
-        workstation_type: WorkstationType,
-        network: NetworkAddress,
-        specs: WorkstationSpecs,
-        location: PhysicalLocation,
-        is_active: bool = True,
+        worksstation_data: WorkstationData,
+        is_authorized: bool = True,
     ):
         super().__init__(id_=id_)
-        self._name = name
-        self._type = workstation_type
-        self._network = network
-        self._specs = specs
-        self._location = location
-        self._is_active = is_active
+        self._hardware_id = worksstation_data.hardware_id
+        self._type = worksstation_data.workstation_type
+        self._network = worksstation_data.network
+        self._specs = worksstation_data.specs
+        self._location = worksstation_data.location
+        self._is_authorized = is_authorized
 
     @property
-    def permits_upload(self) -> bool:
+    def can_upload_file(self) -> bool:
         """Only acquisition workstations can upload data."""
-        return self._type == WorkstationType.ACQUISITION and self._is_active
+        return self._type == WorkstationType.ACQUISITION and self._is_authorized
+
+    @property
+    def can_handle_legal_reports(self) -> bool:
+        """Only acquisition and reporting workstation can handle legal reports."""
+        allowed = [WorkstationType.ACQUISITION, WorkstationType.REPORTING]
+        return self._type in allowed and self._is_authorized
+
+    @property
+    def is_public_viewer(self) -> bool:
+        """Only clinical workstation can be used as public viewers."""
+        return self._type == WorkstationType.CLINICAL

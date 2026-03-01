@@ -3,6 +3,7 @@
 import unicodedata
 from dataclasses import dataclass
 
+from src.dev.domain.enum.user import UserRole
 from src.dev.domain.value_objects.base import BaseValueObject
 
 
@@ -94,3 +95,11 @@ class PersonName(BaseValueObject):
             f"{self.maternal_last_name.value}, "
             f"{names}"
         )
+
+
+@dataclass(frozen=True)
+class PersonData(BaseValueObject):
+    """Value object representing a person's data"""
+
+    name: PersonName
+    role: UserRole

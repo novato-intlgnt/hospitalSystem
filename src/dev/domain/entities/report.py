@@ -3,6 +3,7 @@
 from uuid import UUID
 
 from src.dev.domain.entities.base import BaseEntity
+from src.dev.domain.value_objects.exam import ExamID
 from src.dev.domain.value_objects.user import EntityID
 
 
@@ -13,7 +14,7 @@ class Report(BaseEntity[EntityID]):
         self,
         *,
         id_: EntityID,
-        exam_id: str,
+        exam_id: ExamID,
         doctor_id: UUID,
         content: str,
         signature_hash: str,

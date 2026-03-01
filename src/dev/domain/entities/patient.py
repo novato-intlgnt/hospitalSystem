@@ -19,6 +19,7 @@ class Patient(BaseEntity[EntityID]):
     ) -> None:
         super().__init__(id_=id_)
         self._hc = data.hc
+        self._patient_id = data.patient_id
         self._dni = data.dni
         self._name = data.name
         self._birth_date = birth_date
