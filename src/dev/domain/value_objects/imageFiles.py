@@ -17,12 +17,13 @@ class DicomMetadata(BaseValueObject):
 
 @dataclass(frozen=True)
 class ImageReference(BaseValueObject):
-    """Value object representing a reference to an image file stored"""
-
     url: str
     file_size_bytes: int
-    mime_type: str = "application/dicom"
+    mime_type: str
 
     def __post_init__(self):
         if not self.url.startswith("https://"):
             raise ValueError("The URL must be secure (HTTPS).")
+
+        if self.file_size_bytes <= 0:
+            raise ValueError("File size must be greater than zero.")

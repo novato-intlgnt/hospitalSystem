@@ -1,3 +1,5 @@
+"""Report exceptions"""
+
 from typing import Any
 
 from src.dev.domain.exceptions.base import DomainError

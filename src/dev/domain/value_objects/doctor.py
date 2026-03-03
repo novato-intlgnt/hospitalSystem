@@ -4,6 +4,18 @@ import re
 from dataclasses import dataclass
 
 from src.dev.domain.value_objects.base import BaseValueObject
+from src.dev.domain.value_objects.user import EntityID
+
+
+@dataclass(frozen=True)
+class DoctorID(BaseValueObject):
+    """Value Object doctor ID"""
+
+    value: EntityID
+
+    def __post_init__(self) -> None:
+        if not self.value:
+            raise ValueError("Doctor ID cannot be empty")
 
 
 @dataclass(frozen=True)
