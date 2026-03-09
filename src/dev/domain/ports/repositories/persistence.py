@@ -79,6 +79,10 @@ class UserRepository(Protocol):
         """Check if a user exists by their ID."""
 
     @abstractmethod
+    async def get_by_id(self, id_: EntityID) -> Optional[User]:
+        """Get a user by their ID."""
+
+    @abstractmethod
     async def get_by_username(self, username: Username) -> Optional[User]:
         """Get a user by their username"""
 
