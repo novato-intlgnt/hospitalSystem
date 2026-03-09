@@ -8,7 +8,6 @@ from src.dev.domain.value_objects.base import BaseValueObject
 
 
 @dataclass(frozen=True)
-@dataclass(frozen=True)
 class Name(BaseValueObject):
     """Represents a single word name (no spaces, no hyphens)."""
 

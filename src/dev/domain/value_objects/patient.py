@@ -3,6 +3,8 @@
 - Clinical History (HC)
 """
 
+from __future__ import annotations
+
 import re
 from dataclasses import dataclass
 
@@ -15,7 +17,6 @@ class PatientData(BaseValueObject):
     """Value object representing patient data"""
 
     dni: PatientDNI
-    patient_id: str
     hc: PatientHC
     name: PersonName
 

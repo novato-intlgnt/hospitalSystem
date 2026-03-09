@@ -5,6 +5,7 @@ from typing import Protocol
 
 from src.dev.domain.entities.user import User
 from src.dev.domain.enum.workstationType import WorkstationType
+from src.dev.domain.value_objects.report import ReportSignature
 from src.dev.domain.value_objects.user import RawPassword, UserData, UserPasswordHash
 
 
@@ -32,8 +33,12 @@ class SignatureService(Protocol):
     """RN-07: Garantiza la integridad legal del informe."""
 
     @abstractmethod
-    def generate_hash(self, content: str, medical_license: str) -> str:
+    def generate_hash(self, content: str, medical_license: str) -> ReportSignature:
         """Generate a hash for the given content and medical license."""
+
+    @abstractmethod
+    def verify_signature(self, signature: ReportSignature) -> bool:
+        """Verify the integrity of the report based on the signature"""
 
 
 class NetworkService(Protocol):

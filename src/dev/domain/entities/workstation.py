@@ -3,7 +3,13 @@
 from src.dev.domain.entities.base import BaseEntity
 from src.dev.domain.enum.workstationType import WorkstationType
 from src.dev.domain.value_objects.user import EntityID
-from src.dev.domain.value_objects.workstation import WorkstationData
+from src.dev.domain.value_objects.workstation import (
+    WorkstationData,
+    HardwareID,
+    NetworkAddress,
+    WorkstationSpecs,
+    PhysicalLocation,
+)
 
 
 class Workstation(BaseEntity[EntityID]):
@@ -39,3 +45,33 @@ class Workstation(BaseEntity[EntityID]):
     def is_public_viewer(self) -> bool:
         """Only clinical workstation can be used as public viewers."""
         return self._type == WorkstationType.CLINICAL
+
+    @property
+    def hardware_id(self) -> HardwareID:
+        """Get the workstation's hardware ID"""
+        return self._hardware_id
+
+    @property
+    def type(self) -> WorkstationType:
+        """Get the workstation's type"""
+        return self._type
+
+    @property
+    def network(self) -> NetworkAddress:
+        """Get the workstation's network address"""
+        return self._network
+
+    @property
+    def specs(self) -> WorkstationSpecs:
+        """Get the workstation's specifications"""
+        return self._specs
+
+    @property
+    def location(self) -> PhysicalLocation:
+        """Get the workstation's physical location"""
+        return self._location
+
+    @property
+    def is_authorized(self) -> bool:
+        """Check if the workstation is authorized"""
+        return self._is_authorized

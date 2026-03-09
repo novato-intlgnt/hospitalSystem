@@ -14,6 +14,6 @@ class LogEntry(BaseValueObject):
 
     hardware_id: HardwareID
     action: str
-    resource_id: str
+    resource_id: EntityID
     network_info: NetworkAddress
     user_id: Optional[EntityID] = None

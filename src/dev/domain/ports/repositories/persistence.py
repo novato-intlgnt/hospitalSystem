@@ -9,7 +9,7 @@ from src.dev.domain.entities.patient import Patient
 from src.dev.domain.entities.report import Report
 from src.dev.domain.entities.user import User
 from src.dev.domain.entities.workstation import Workstation
-from src.dev.domain.value_objects.exam import ExamID
+from src.dev.domain.value_objects.exam import ExamCode
 from src.dev.domain.value_objects.patient import PatientDNI, PatientHC
 from src.dev.domain.value_objects.user import EntityID, Username
 from src.dev.domain.value_objects.workstation import NetworkAddress
@@ -47,7 +47,7 @@ class ExamRepository(Protocol):
         """Get an exam by its ID."""
 
     @abstractmethod
-    async def get_by_exam_id(self, exam_id: ExamID) -> Optional[Exam]:
+    async def get_by_exam_id(self, exam_id: ExamCode) -> Optional[Exam]:
         """Get an exam by its ID."""
 
     @abstractmethod
@@ -60,14 +60,14 @@ class ExamRepository(Protocol):
 
 
 class ReportRepository(Protocol):
-    """Port for reporrt repository"""
+    """Port for report repository"""
 
     @abstractmethod
     async def save(self, report: Report) -> None:
         """Save a reporta."""
 
     @abstractmethod
-    async def get_versions(self, exam_id: ExamID) -> List[Report]:
+    async def get_versions(self, exam_id: ExamCode) -> List[Report]:
         """Get all versions of a report for a given exam ID."""
 
 

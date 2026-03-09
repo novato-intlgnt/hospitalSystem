@@ -2,7 +2,6 @@
 
 from src.dev.domain.entities.base import BaseEntity
 from src.dev.domain.enum.images import ImageType
-from src.dev.domain.value_objects.exam import ExamID
 from src.dev.domain.value_objects.imageFiles import DicomMetadata, ImageReference
 from src.dev.domain.value_objects.user import EntityID
 
@@ -14,7 +13,7 @@ class Image(BaseEntity[EntityID]):
         self,
         *,
         id_: EntityID,
-        exam_id: ExamID,
+        exam_id: EntityID,
         image_type: ImageType,
         reference: ImageReference,
         metadata: DicomMetadata | None = None,
@@ -36,7 +35,7 @@ class Image(BaseEntity[EntityID]):
             raise ValueError("Static images cannot contain DICOM metadata.")
 
     @property
-    def exam_id(self) -> ExamID:
+    def exam_id(self) -> EntityID:
         """Get the exam ID associated with this image."""
         return self._exam_id
 
