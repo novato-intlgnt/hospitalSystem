@@ -2,7 +2,7 @@
 
 from unittest.mock import MagicMock
 
-from src.dev.domain.services.report_amendment import ReportAmendmentService
+from src.dev.domain.services.report.report_amendment import ReportAmendmentService
 
 
 def test_amend_report_success():
@@ -17,7 +17,7 @@ def test_amend_report_success():
     original_report_mock.create_amendment.return_value = new_report_mock
 
     # Execute the service
-    new_id = "report_id_2"
+    new_id = "new_id"
     new_content = MagicMock()
     result = service.amend_report(original_report_mock, new_id, new_content)
 

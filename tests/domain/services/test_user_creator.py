@@ -7,18 +7,23 @@ import pytest
 from src.dev.domain.entities.user import User
 from src.dev.domain.enum.user import UserRole
 from src.dev.domain.exceptions.base import DomainError
-from src.dev.domain.services.user_creator import UserCreatorService
+from src.dev.domain.services.user.user_creator import UserCreatorService
 
 
 def _make_service(user_repo=None, id_gen=None, hasher=None):
     user_repo = user_repo or AsyncMock()
     id_gen = id_gen or AsyncMock()
     hasher = hasher or AsyncMock()
-    return UserCreatorService(
-        id_generator=id_gen,
-        user_repository=user_repo,
-        password_hasher=hasher,
-    ), user_repo, id_gen, hasher
+    return (
+        UserCreatorService(
+            id_generator=id_gen,
+            user_repository=user_repo,
+            password_hasher=hasher,
+        ),
+        user_repo,
+        id_gen,
+        hasher,
+    )
 
 
 @pytest.mark.asyncio

@@ -33,13 +33,9 @@ class WorkstationAuthorizerService:
         if workstation.is_authorized:
             raise DomainError("Workstation is already authorized.")
 
-        updated = Workstation(
-            id_=workstation.id_,
-            worksstation_data=self._build_data(workstation),
-            is_authorized=True,
-        )
-        await self._workstation_repository.save(updated)
-        return updated
+        workstation.authorize()
+        await self._workstation_repository.save(workstation)
+        return workstation
 
     async def deauthorize(self, workstation_id: EntityID) -> Workstation:
         """
@@ -54,23 +50,6 @@ class WorkstationAuthorizerService:
         if not workstation.is_authorized:
             raise DomainError("Workstation is already deauthorized.")
 
-        updated = Workstation(
-            id_=workstation.id_,
-            worksstation_data=self._build_data(workstation),
-            is_authorized=False,
-        )
-        await self._workstation_repository.save(updated)
-        return updated
-
-    @staticmethod
-    def _build_data(ws: Workstation):
-        """Reconstruct WorkstationData from the entity's current state."""
-        from src.dev.domain.value_objects.workstation import WorkstationData
-
-        return WorkstationData(
-            hardware_id=ws.hardware_id,
-            network=ws.network,
-            specs=ws.specs,
-            location=ws.location,
-            workstation_type=ws.type,
-        )
+        workstation.deauthorize()
+        await self._workstation_repository.save(workstation)
+        return workstation

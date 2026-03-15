@@ -3,7 +3,7 @@
 import ipaddress
 from dataclasses import dataclass
 
-from src.dev.domain.enum.workstationType import WorkstationType
+from src.dev.domain.enum.workstation import WorkstationStatus, WorkstationType
 from src.dev.domain.value_objects.base import BaseValueObject
 
 
@@ -61,3 +61,5 @@ class WorkstationData(BaseValueObject):
     specs: WorkstationSpecs
     location: PhysicalLocation
     workstation_type: WorkstationType
+    workstation_status: WorkstationStatus
+    is_active: bool

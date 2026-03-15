@@ -6,7 +6,9 @@ import pytest
 
 from src.dev.domain.entities.workstation import Workstation
 from src.dev.domain.exceptions.base import DomainError
-from src.dev.domain.services.workstation_creator import WorkstationCreatorService
+from src.dev.domain.services.workstation.workstation_creator import (
+    WorkstationCreatorService,
+)
 
 
 @pytest.mark.asyncio
@@ -24,7 +26,7 @@ async def test_create_workstation_success():
     )
 
     ws_data = MagicMock()
-    result = await service.create_workstation(workstation_data=ws_data, is_authorized=True)
+    result = await service.create_workstation(workstation_data=ws_data)
 
     assert isinstance(result, Workstation)
     ws_repo.esists_by_network_address.assert_called_once_with(ws_data.network)
@@ -64,9 +66,11 @@ async def test_create_workstation_unauthorized():
         workstation_repository=ws_repo,
     )
 
+    ws_data = MagicMock()
+    ws_data.workstation_status.is_authorized = False
+
     result = await service.create_workstation(
-        workstation_data=MagicMock(),
-        is_authorized=False,
+        workstation_data=ws_data,
     )
 
     assert isinstance(result, Workstation)

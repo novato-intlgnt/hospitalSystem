@@ -22,7 +22,6 @@ class WorkstationCreatorService:
     async def create_workstation(
         self,
         workstation_data: WorkstationData,
-        is_authorized: bool = True,
     ) -> Workstation:
         """
         Creates a new Workstation.
@@ -44,6 +43,5 @@ class WorkstationCreatorService:
 
         return Workstation(
             id_=id_,
-            worksstation_data=workstation_data,
-            is_authorized=is_authorized,
+            workstation_data=workstation_data,
         )

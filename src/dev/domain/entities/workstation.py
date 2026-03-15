@@ -1,14 +1,14 @@
 """Workstation entity definition"""
 
 from src.dev.domain.entities.base import BaseEntity
-from src.dev.domain.enum.workstationType import WorkstationType
+from src.dev.domain.enum.workstation import WorkstationStatus, WorkstationType
 from src.dev.domain.value_objects.user import EntityID
 from src.dev.domain.value_objects.workstation import (
-    WorkstationData,
     HardwareID,
     NetworkAddress,
-    WorkstationSpecs,
     PhysicalLocation,
+    WorkstationData,
+    WorkstationSpecs,
 )
 
 
@@ -19,27 +19,35 @@ class Workstation(BaseEntity[EntityID]):
         self,
         *,
         id_: EntityID,
-        worksstation_data: WorkstationData,
-        is_authorized: bool = True,
+        workstation_data: WorkstationData,
     ):
         super().__init__(id_=id_)
-        self._hardware_id = worksstation_data.hardware_id
-        self._type = worksstation_data.workstation_type
-        self._network = worksstation_data.network
-        self._specs = worksstation_data.specs
-        self._location = worksstation_data.location
-        self._is_authorized = is_authorized
+        self._hardware_id = workstation_data.hardware_id
+        self._type = workstation_data.workstation_type
+        self._network = workstation_data.network
+        self._specs = workstation_data.specs
+        self._location = workstation_data.location
+        self._is_active = workstation_data.is_active
+        self._status = workstation_data.workstation_status
+
+    def authorize(self) -> None:
+        """Authorize the workstation for use"""
+        self._status = self._status.authorize()
+
+    def deauthorize(self) -> None:
+        """Deauthorize the workstation to block sensitive operations"""
+        self._status = self._status.deauthorize()
 
     @property
     def can_upload_file(self) -> bool:
         """Only acquisition workstations can upload data."""
-        return self._type == WorkstationType.ACQUISITION and self._is_authorized
+        return self._type == WorkstationType.ACQUISITION and self._status.is_authorized
 
     @property
     def can_handle_legal_reports(self) -> bool:
         """Only acquisition and reporting workstation can handle legal reports."""
         allowed = [WorkstationType.ACQUISITION, WorkstationType.REPORTING]
-        return self._type in allowed and self._is_authorized
+        return self._type in allowed and self._status.is_authorized
 
     @property
     def is_public_viewer(self) -> bool:
@@ -72,6 +80,16 @@ class Workstation(BaseEntity[EntityID]):
         return self._location
 
     @property
+    def status(self) -> WorkstationStatus:
+        """Get the workstation's status"""
+        return self._status
+
+    @property
+    def is_active(self) -> bool:
+        """Get the workstation's status"""
+        return self._is_active
+
+    @property
     def is_authorized(self) -> bool:
         """Check if the workstation is authorized"""
-        return self._is_authorized
+        return self._status.is_authorized

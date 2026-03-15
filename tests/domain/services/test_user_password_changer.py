@@ -6,7 +6,9 @@ import pytest
 
 from src.dev.domain.entities.user import User
 from src.dev.domain.exceptions.base import DomainError
-from src.dev.domain.services.user_password_changer import UserPasswordChangerService
+from src.dev.domain.services.user.user_password_changer import (
+    UserPasswordChangerService,
+)
 
 
 @pytest.mark.asyncio

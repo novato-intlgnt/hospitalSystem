@@ -4,7 +4,7 @@ from abc import abstractmethod
 from typing import Protocol
 
 from src.dev.domain.entities.user import User
-from src.dev.domain.enum.workstationType import WorkstationType
+from src.dev.domain.enum.workstation import WorkstationType
 from src.dev.domain.value_objects.report import ReportSignature
 from src.dev.domain.value_objects.user import RawPassword, UserData, UserPasswordHash
 

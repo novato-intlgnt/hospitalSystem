@@ -15,11 +15,18 @@
 
 ### Estaciones de trabajo
 
-- **RN-08 (Clasificación de Terminales):** Toda máquina en la red debe estar identificada y clasificada como `ADQUISICION` (pueden subir datos) o `VISUALIZACION` (solo lectura).
-- **RN-09 (Restricción de Carga):** La creación de exámenes y la subida de imágenes DICOM está restringida exclusivamente a máquinas de tipo `ADQUISICION`.
-- **RN-10 (Restricción de Operaciones Legales):** El login de médicos para la elaboración y firma de informes solo se permitirá en máquinas autorizadas (pueden ser de adquisición o estaciones de trabajo médicas específicas).
-- **RN-11 (Visualización de Red):** Las máquinas de `VISUALIZACION` permiten la consulta de exámenes e informes ya finalizados sin login, pero bloquean cualquier intento de edición o creación.
-- **RN-12 (Trazabilidad de Hardware):** Toda acción registrada en el sistema debe auditar la dirección IP y el identificador de la máquina de origen, además del usuario (si lo hay).
+- **RN-08 (Peticion de habilitacion de maquina):** Las maquinas hacen una solicitud de habilitacion al administrador, ademas de enviar su direccion IP y MAC, ubicacion fisica y tipo (adquisicion o visualizacion)
+- **RN-09 (Clasificación de Terminales):** Toda máquina en la red debe estar identificada y clasificada como `ADQUISICION` (pueden subir datos) o `VISUALIZACION` (solo lectura).
+- **RN-10 (Restricción de Carga):** La creación de exámenes y la subida de imágenes DICOM está restringida exclusivamente a máquinas de tipo `ADQUISICION`.
+- **RN-11 (Restricción de Operaciones Legales):** El login de médicos para la elaboración y firma de informes solo se permitirá en máquinas autorizadas (pueden ser de adquisición o estaciones de trabajo médicas específicas).
+- **RN-12 (Visualización de Red):** Las máquinas de `VISUALIZACION` permiten la consulta de exámenes e informes ya finalizados sin login, pero bloquean cualquier intento de edición o creación.
+- **RN-13 (Trazabilidad de Hardware):** Toda acción registrada en el sistema debe auditar la dirección IP y el identificador de la máquina de origen, además del usuario (si lo hay).
+
+### Usuarios y Roles
+
+- **RN-14 (Creacion de usuarios):** Solo el administrador puede crear cuentas de usuario, asignar roles.
+- **RN-15 (Usuario Medico):** El medico puede ver solo pacientes y examenes, redactar y firmar informes
+- **RN-16 (Firmar reporte):** Puede firmar solo si tiene sus credenciales registradas(CMP y RNE) y se loguea desde una maquina autorizada.(revisar userQueryGateway)
 
 ---
 

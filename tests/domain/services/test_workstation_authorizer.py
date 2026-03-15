@@ -6,17 +6,13 @@ import pytest
 
 from src.dev.domain.entities.workstation import Workstation
 from src.dev.domain.exceptions.base import DomainError
-from src.dev.domain.services.workstation_authorizer import WorkstationAuthorizerService
+from src.dev.domain.services.workstation.workstation_authorizer import (
+    WorkstationAuthorizerService,
+)
 
 
 def _make_ws_mock(*, is_authorized: bool) -> MagicMock:
     ws = MagicMock(spec=Workstation)
-    ws.id_ = MagicMock()
-    ws.hardware_id = MagicMock()
-    ws.network = MagicMock()
-    ws.specs = MagicMock()
-    ws.location = MagicMock()
-    ws.type = MagicMock()
     ws.is_authorized = is_authorized
     return ws
 
@@ -31,9 +27,9 @@ async def test_authorize_success():
     service = WorkstationAuthorizerService(workstation_repository=ws_repo)
     result = await service.authorize(workstation_id=MagicMock())
 
-    assert isinstance(result, Workstation)
-    assert result.is_authorized is True
-    ws_repo.save.assert_called_once()
+    assert result is ws_mock
+    ws_mock.authorize.assert_called_once()
+    ws_repo.save.assert_called_once_with(ws_mock)
 
 
 @pytest.mark.asyncio
@@ -72,9 +68,9 @@ async def test_deauthorize_success():
     service = WorkstationAuthorizerService(workstation_repository=ws_repo)
     result = await service.deauthorize(workstation_id=MagicMock())
 
-    assert isinstance(result, Workstation)
-    assert result.is_authorized is False
-    ws_repo.save.assert_called_once()
+    assert result is ws_mock
+    ws_mock.deauthorize.assert_called_once()
+    ws_repo.save.assert_called_once_with(ws_mock)
 
 
 @pytest.mark.asyncio

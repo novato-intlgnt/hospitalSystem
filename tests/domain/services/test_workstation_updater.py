@@ -6,10 +6,12 @@ import pytest
 
 from src.dev.domain.entities.workstation import Workstation
 from src.dev.domain.exceptions.base import DomainError
-from src.dev.domain.services.workstation_updater import WorkstationUpdaterService
+from src.dev.domain.services.workstation.workstation_updater import (
+    WorkstationUpdaterService,
+)
 
 
-def _make_ws_mock(*, is_authorized: bool = True) -> MagicMock:
+def _make_ws_mock(*, is_active: bool = True) -> MagicMock:
     ws = MagicMock(spec=Workstation)
     ws.id_ = MagicMock()
     ws.hardware_id = MagicMock()
@@ -17,7 +19,8 @@ def _make_ws_mock(*, is_authorized: bool = True) -> MagicMock:
     ws.specs = MagicMock()
     ws.location = MagicMock()
     ws.type = MagicMock()
-    ws.is_authorized = is_authorized
+    ws.status = MagicMock()
+    ws.is_active = is_active
     return ws
 
 

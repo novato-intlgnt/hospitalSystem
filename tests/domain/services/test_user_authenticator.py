@@ -6,7 +6,7 @@ import pytest
 
 from src.dev.domain.entities.user import User
 from src.dev.domain.exceptions.base import DomainError
-from src.dev.domain.services.user_authenticator import UserAuthenticatorService
+from src.dev.domain.services.user.user_authenticator import UserAuthenticatorService
 
 
 @pytest.mark.asyncio

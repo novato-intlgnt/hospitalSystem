@@ -3,6 +3,7 @@
 from typing import Optional
 
 from src.dev.domain.entities.workstation import Workstation
+from src.dev.domain.enum.workstation import WorkstationType
 from src.dev.domain.exceptions.base import DomainError
 from src.dev.domain.ports.repositories.persistence import WorkstationRepository
 from src.dev.domain.value_objects.user import EntityID
@@ -12,7 +13,6 @@ from src.dev.domain.value_objects.workstation import (
     WorkstationData,
     WorkstationSpecs,
 )
-from src.dev.domain.enum.workstationType import WorkstationType
 
 
 class WorkstationUpdaterService:
@@ -46,8 +46,10 @@ class WorkstationUpdaterService:
 
         # Validate new network address uniqueness (RN-09)
         if new_network is not None and new_network != workstation.network:
-            already_exists = await self._workstation_repository.esists_by_network_address(
-                new_network
+            already_exists = (
+                await self._workstation_repository.esists_by_network_address(
+                    new_network
+                )
             )
             if already_exists:
                 raise DomainError(
@@ -61,12 +63,13 @@ class WorkstationUpdaterService:
             specs=new_specs if new_specs is not None else workstation.specs,
             location=new_location if new_location is not None else workstation.location,
             workstation_type=new_type if new_type is not None else workstation.type,
+            workstation_status=workstation.status,
+            is_active=workstation.is_active,
         )
 
         updated = Workstation(
             id_=workstation.id_,
-            worksstation_data=updated_data,
-            is_authorized=workstation.is_authorized,
+            workstation_data=updated_data,
         )
         await self._workstation_repository.save(updated)
         return updated

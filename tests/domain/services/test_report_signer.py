@@ -5,7 +5,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 
 from src.dev.domain.exceptions.report import UnauthorizedSignerError
-from src.dev.domain.services.report_signer import ReportSignerService
+from src.dev.domain.services.report.report_signer import ReportSignerService
 
 
 def test_report_signer_success():
