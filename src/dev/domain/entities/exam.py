@@ -85,7 +85,7 @@ class Exam(BaseEntity[EntityID]):
 
     def cancel(self) -> None:
         """Cancel the exam."""
-        if self._status in [ExamStatus.REPORTED, ExamStatus.DELIVERED]:
+        if self._status == ExamStatus.REPORTED:
             raise DomainError(f"Cannot cancel an exam in {self._status} status")
         self._status = ExamStatus.CANCELLED
 
@@ -94,4 +94,4 @@ class Exam(BaseEntity[EntityID]):
         if self._status == ExamStatus.REPORTED:
             raise ValueError("Cannot add images to a reported exam.")
         self._images.append(image)
-        self._status = ExamStatus.IN_PROGRESS
+        self._status = ExamStatus.INCOMPLETE

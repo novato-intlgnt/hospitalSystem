@@ -23,3 +23,10 @@ __all__ = [
     "InvalidExamStateTransitionError",
     "UnauthorizedAccessError",
 ]
+from .insufficient_role import InsufficientRoleError
+from .missing_doctor_credentials import MissingDoctorCredentialsError
+
+__all__ += [
+    "InsufficientRoleError",
+    "MissingDoctorCredentialsError",
+]

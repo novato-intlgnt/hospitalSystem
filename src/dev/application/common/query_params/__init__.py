@@ -15,3 +15,10 @@ __all__ = [
     "ExamQueryParams",
     "AuditLogQueryParams",
 ]
+from .user_filters import UserQueryParams
+from .workstation_filters import WorkstationQueryParams
+
+__all__ += [
+    "UserQueryParams",
+    "WorkstationQueryParams",
+]

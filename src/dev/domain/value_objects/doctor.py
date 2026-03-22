@@ -36,7 +36,7 @@ class CMPNumber(BaseValueObject):
     number: str
 
     def __post_init__(self) -> None:
-        if not re.match(r"^\d{5-6}$", self.number):
+        if not re.match(r"^\d{5,6}$", self.number):
             raise ValueError(f"Invalid CMP number format: {self.number}")
 
 
@@ -47,7 +47,7 @@ class RNENumber(BaseValueObject):
     number: str
 
     def __post_init__(self) -> None:
-        if not re.match(r"^\d{5-6}$", self.number):
+        if not re.match(r"^\d{5,6}$", self.number):
             raise ValueError(f"Invalid RNE number format: {self.number}")
 
 

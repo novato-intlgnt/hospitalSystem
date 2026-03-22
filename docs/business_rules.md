@@ -28,6 +28,8 @@
 - **RN-15 (Usuario Medico):** El medico puede ver solo pacientes y examenes, redactar y firmar informes
 - **RN-16 (Firmar reporte):** Puede firmar solo si tiene sus credenciales registradas(CMP y RNE) y se loguea desde una maquina autorizada.(revisar userQueryGateway)
 
+- **RN-17 (Manejo de usiarios y maquinas):** El administrador puede eliminar usuarios y maquinas, y modificar roles y permisos.
+
 ---
 
 ## 🛠️ 2. Rol del Administrador (Módulo de Auditoría y Control)

@@ -10,7 +10,7 @@ class InvalidExamStateTransitionError(ApplicationError):
 
     This exception is raised at the use-case level when a command tries to
     move an exam to a lifecycle state that is not reachable from its current
-    one (e.g. transitioning a DELIVERED exam back to IN_PROGRESS).
+    one
 
     It complements the domain-layer ``InvalidExamStateError`` by providing
     richer context about the attempted workflow step, making it suitable for
